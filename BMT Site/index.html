@@ -1,0 +1,816 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Ремонт квартир в Батуми от идеи до реализации. Рассчитайте стоимость за 60 секунд и получите скидку до 10%">
+<title>BMT Remonti — ремонт квартир в Батуми · расчёт за 60 секунд</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/inter@5.0.16/index.min.css">
+<style>
+:root{--o:#e30613;--o-d:#b80510;--bd:#e9e9e9;--tx:#1c1c1c;--tg:#2aabee;
+--bg:#eae7e2;--card:#ffffff;--card-2:#f5f3ef;--line:#d8d4cc;--line-2:#c8c3ba;--ink:#1f1f1f;--ink-soft:#5a5550;--muted:#8a857e;--red:#e30613;--red-deep:#b80510;--red-soft:#ff2a36;--radius:12px;--radius-sm:10px;--shadow:0 2px 12px rgba(30,25,20,.06)}
+*{font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Arial,sans-serif;box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+html{scroll-behavior:smooth}
+body{background:#fff;color:var(--tx);overflow-x:hidden;font-size:15px;line-height:1.45;-webkit-font-smoothing:antialiased}
+img{max-width:100%}
+.o{color:var(--o)}
+.wrap{max-width:1200px;margin:0 auto;padding:0 20px}
+
+/* ============ HEADER ============ */
+.hdr{position:sticky;top:0;z-index:60;background:#f6f6f6;border-bottom:1px solid var(--bd)}
+.hdr-in{display:flex;align-items:center;gap:16px;padding:12px 0}
+.h-right{margin-left:auto;display:flex;align-items:center;gap:16px}
+.h-contact{display:flex;flex-direction:column;align-items:flex-end;gap:7px}
+.tel-row{font-size:15px;font-weight:800;color:#111;text-decoration:none;white-space:nowrap;line-height:1;letter-spacing:.2px}
+.tel-row:hover{color:var(--o)}
+.tel-pre{font-size:11px;font-weight:600;color:#9a9a9a;margin-right:5px}
+.tg-pill{display:inline-flex;align-items:center;gap:8px;padding:5px 14px 5px 6px;border-radius:999px;background:rgba(42,171,238,.12);color:#1787b9;font-size:12px;font-weight:700;text-decoration:none;line-height:1;transition:.2s}
+.tg-pill i{width:22px;height:22px;flex:0 0 22px;border-radius:50%;background:var(--tg);color:#fff;display:inline-flex;align-items:center;justify-content:center;transition:.2s}
+.tg-pill i svg{width:12px;height:12px}
+.tg-pill:hover{background:var(--tg);color:#fff;transform:translateY(-1px);box-shadow:0 6px 16px rgba(42,171,238,.35)}
+.v-div{width:1px;height:44px;background:var(--bd)}
+.burger{background:none;border:none;cursor:pointer;padding:8px;display:flex;align-items:center;justify-content:center;color:#111}
+@media(max-width:760px){.hdr-in{gap:12px;padding:10px 0}.tel-row{font-size:13px}.tel-pre{font-size:10px}.tg-pill{font-size:11px}.tg-pill i{width:20px;height:20px;flex-basis:20px}.v-div{height:38px}}
+@media(max-width:420px){.tel-row{font-size:12px}.h-right{gap:10px}.v-div{display:none}}
+.m-menu{display:none;background:#181818;padding:12px 20px 20px}
+.m-menu.open{display:block}
+.m-menu a{display:block;color:#eee;text-decoration:none;padding:11px 0;font-size:15px;font-weight:600;border-bottom:1px solid #2c2c2c}
+.m-menu a:last-of-type{border:none}
+.m-menu .tb-btn{margin-top:14px;width:100%;background:var(--o);color:#fff;border:none;border-radius:4px;padding:13px 18px;font-size:14px;font-weight:700;cursor:pointer}
+
+/* ============ ЭКРАН 1: HERO-SCENE (ВИДЕО + ФОТО-ФОЛБЭК) ============ */
+.hero{position:relative;min-height:92vh;display:flex;flex-direction:column;justify-content:flex-end;color:#fff;overflow:hidden;background:#141414;isolation:isolate}
+.scene{position:absolute;inset:0;z-index:0}
+.scene-img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.reveal{position:absolute;inset:0;clip-path:inset(0 100% 0 0);animation:sweep 9s cubic-bezier(.65,.05,.35,1) infinite}
+@keyframes sweep{0%{clip-path:inset(0 100% 0 0);opacity:1}42%{clip-path:inset(0 0 0 0);opacity:1}78%{clip-path:inset(0 0 0 0);opacity:1}84%{clip-path:inset(0 0 0 0);opacity:0}86%{clip-path:inset(0 100% 0 0);opacity:0}92%{clip-path:inset(0 100% 0 0);opacity:1}100%{clip-path:inset(0 100% 0 0);opacity:1}}
+.beam{position:absolute;top:0;bottom:0;left:0;width:3px;z-index:1;background:linear-gradient(180deg,transparent,rgba(255,255,255,.95) 30%,rgba(227,6,19,.95) 70%,transparent);box-shadow:0 0 26px rgba(227,6,19,.85),0 0 60px rgba(255,255,255,.35);animation:beam 9s cubic-bezier(.65,.05,.35,1) infinite}
+@keyframes beam{0%{left:0%;opacity:0}4%{opacity:1}42%{left:100%;opacity:1}46%{opacity:0}100%{left:100%;opacity:0}}
+/* видео поверх фотосцены; если файла нет — видео скрывается, работает трансформация */
+.scene-video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:2}
+.scene.video-off .scene-video{display:none}
+.shade{position:absolute;inset:0;z-index:3;background:linear-gradient(90deg,rgba(10,10,10,.9) 0%,rgba(10,10,10,.72) 36%,rgba(10,10,10,.25) 62%,rgba(10,10,10,.45) 100%),linear-gradient(0deg,rgba(10,10,10,.85) 0%,transparent 34%)}
+@media(prefers-reduced-motion:reduce){.reveal{animation:none;clip-path:none}.beam{display:none}.scene-video{display:none}}
+.eyebrow-row{position:absolute;top:16px;left:0;right:0;z-index:3}
+.eyebrow{display:inline-flex;align-items:center;gap:8px;font-size:10px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;color:rgba(255,255,255,.65);white-space:nowrap}
+.eyebrow i{width:7px;height:7px;border-radius:50%;background:var(--o);box-shadow:0 0 0 3px rgba(227,6,19,.2)}
+@media(max-width:420px){.eyebrow{font-size:9px;letter-spacing:.6px}}
+.hero-in{position:relative;z-index:2;padding-top:64px;padding-bottom:56px;max-width:1200px;margin:0 auto;width:100%;padding-left:20px;padding-right:20px}
+.h1{font-size:clamp(30px,4.6vw,54px);font-weight:800;line-height:1.1;letter-spacing:-.02em;margin:0 0 16px;max-width:640px}
+.h1 .block{display:block}
+.hero-sub{font-size:16.5px;line-height:1.6;color:rgba(255,255,255,.78);max-width:520px;margin:0 0 28px}
+.quiz-cta{position:relative;display:flex;align-items:center;justify-content:space-between;gap:18px;max-width:600px;background:rgba(15,15,15,.55);border:1px solid rgba(255,255,255,.16);border-radius:14px;padding:16px 16px 16px 22px;backdrop-filter:blur(10px);text-decoration:none;color:#fff;transition:.25s;overflow:hidden}
+.quiz-cta::before{content:'';position:absolute;left:0;top:0;bottom:0;width:3px;background:var(--o)}
+.quiz-cta:hover{border-color:rgba(227,6,19,.6);transform:translateY(-3px);box-shadow:0 14px 40px rgba(227,6,19,.25)}
+.qc-info{display:flex;flex-direction:column;gap:6px;min-width:0}
+.qc-label{font-size:10px;font-weight:800;letter-spacing:1.2px;text-transform:uppercase;color:rgba(255,255,255,.55)}
+.qc-label b{color:var(--o)}
+.qc-q{font-size:17px;font-weight:700;transition:opacity .3s,transform .3s;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.qc-q.swap{opacity:0;transform:translateY(6px)}
+.qc-dots{display:flex;gap:5px;flex-wrap:wrap}
+.qc-dots i{width:14px;height:3px;border-radius:2px;background:rgba(255,255,255,.18);transition:.3s}
+.qc-dots i.on{background:var(--o);width:22px}
+.qc-btn{flex:0 0 auto;display:inline-flex;align-items:center;gap:10px;background:var(--o);color:#fff;border-radius:10px;padding:14px 22px;font-size:15px;font-weight:700;transition:.2s}
+.qc-btn svg{transition:.25s}
+.quiz-cta:hover .qc-btn{background:var(--o-d)}
+.quiz-cta:hover .qc-btn svg{transform:translateX(4px)}
+@media(max-width:560px){.quiz-cta{flex-direction:column;align-items:stretch;text-align:center}.qc-info{align-items:center}.qc-q{white-space:normal}.qc-btn{justify-content:center}}
+
+/* ============ ЭКРАН 2: QUIZ ============ */
+.quiz-band{background:var(--bg);padding:56px 0 84px}
+.qwrap{max-width:560px;margin:0 auto;padding:0 14px;display:flex;flex-direction:column}
+.qband-title{text-align:center;font-size:clamp(22px,3.4vw,30px);font-weight:800;color:var(--ink);letter-spacing:-.3px;margin-bottom:6px}
+.qband-title em{font-style:normal;color:var(--red)}
+.qband-sub{text-align:center;font-size:13px;color:var(--ink-soft);margin-bottom:18px}
+.discount-bar{background:var(--card);border-radius:var(--radius-sm);padding:10px 14px;margin-bottom:10px;border-left:2px solid var(--red);box-shadow:var(--shadow)}
+.discount-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:6px}
+.discount-label{font-size:12px;color:var(--ink-soft)}
+.discount-label b{color:var(--red);font-weight:700;font-size:14px}
+.discount-max{font-size:13px;color:var(--muted);font-weight:600}
+.discount-track{height:5px;background:var(--bg);border-radius:3px;overflow:hidden}
+.discount-fill{height:100%;background:linear-gradient(90deg,var(--red),var(--red-soft));border-radius:3px;transition:width .6s cubic-bezier(.4,0,.2,1)}
+.discount-replica{font-size:11px;color:var(--red);margin-top:4px;min-height:14px;font-style:italic;opacity:0;transform:translateY(-3px);transition:all .4s}
+.discount-replica.show{opacity:1;transform:translateY(0)}
+.progress{display:flex;gap:4px;margin-bottom:10px}
+.progress-dot{flex:1;height:2px;background:var(--line);border-radius:1px;transition:background .4s}
+.progress-dot.done{background:var(--red)}
+.progress-dot.active{background:var(--red-soft)}
+.screen{display:none;animation:screenIn .35s cubic-bezier(.4,0,.2,1);flex-direction:column}
+.screen.active{display:flex}
+@keyframes screenIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+.question{font-size:20px;font-weight:700;line-height:1.2;margin-bottom:6px;color:var(--ink);letter-spacing:-.2px}
+.question em{color:var(--red);font-style:normal}
+.subtitle{font-size:13px;color:var(--ink-soft);margin-bottom:10px;line-height:1.4}
+.quiz-card{background:var(--card);border-radius:var(--radius);padding:14px 12px;border-left:2px solid var(--red);box-shadow:var(--shadow);display:flex;flex-direction:column;min-height:440px}
+.quiz-card-label{font-size:10px;color:var(--red);letter-spacing:1.5px;font-weight:700;margin-bottom:6px;text-transform:uppercase}
+.options{display:flex;flex-direction:column;gap:6px;margin-bottom:10px}
+.option{background:var(--card);border:1.5px solid var(--line);border-radius:var(--radius-sm);padding:10px 12px;cursor:pointer;transition:all .2s;font-size:14px;text-align:left;display:flex;align-items:center;gap:10px;min-height:44px;color:var(--ink)}
+.option:hover{border-color:var(--line-2);background:var(--card-2)}
+.option:active{transform:scale(.98)}
+.option.selected{border-color:var(--red);background:#fff5f5;box-shadow:0 0 0 1px var(--red)}
+.option-icon{width:28px;height:28px;border-radius:50%;background:var(--card-2);display:flex;align-items:center;justify-content:center;flex-shrink:0;color:var(--ink-soft);transition:all .2s;border:1px solid var(--line)}
+.option-icon svg{width:14px;height:14px}
+.option.selected .option-icon{background:var(--red);color:#fff;border-color:var(--red)}
+.option-text{flex:1}
+.option-text small{display:block;font-size:11px;color:var(--muted);margin-top:2px;line-height:1.3}
+.style-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:10px}
+.style-card{background:var(--card);border:1.5px solid var(--line);border-radius:var(--radius-sm);overflow:hidden;cursor:pointer;transition:all .25s;display:flex;flex-direction:column}
+.style-card:hover{border-color:var(--line-2)}
+.style-card.selected{border-color:var(--red);box-shadow:0 0 0 1px var(--red)}
+.style-photo{height:96px;background:linear-gradient(135deg,#e8e4dd,#d4cfc5);position:relative;overflow:hidden;flex-shrink:0}
+.style-photo svg{width:100%;height:100%;position:absolute;top:0;left:0}
+.style-photo img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:transform .45s cubic-bezier(.2,.6,.2,1)}
+.style-photo::after{content:'';position:absolute;inset:0;background:linear-gradient(0deg,rgba(20,15,10,.18),transparent 45%);pointer-events:none}
+.style-card:hover .style-photo img{transform:scale(1.06)}
+.style-info{padding:8px 8px 9px}
+.style-name{font-size:14px;font-weight:600;margin-bottom:2px;color:var(--ink);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.style-desc{font-size:10.5px;line-height:1.35;color:var(--ink-soft);display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;min-height:2.7em}
+.input-group{margin-bottom:10px}
+.input-label{font-size:11px;color:var(--muted);margin-bottom:4px;display:block;letter-spacing:.5px;text-transform:uppercase;font-weight:600}
+.input-field{width:100%;padding:10px 12px;border:1.5px solid var(--line);border-radius:var(--radius-sm);font-size:15px;background:var(--card);color:var(--ink);transition:all .2s;font-family:inherit}
+.input-field:focus{outline:none;border-color:var(--red);box-shadow:0 0 0 2px rgba(227,6,19,.1)}
+.input-field::placeholder{color:var(--muted)}
+.radio-group{display:flex;gap:6px;flex-wrap:wrap}
+.radio-btn{flex:1;min-width:70px;padding:10px 8px;border:1.5px solid var(--line);border-radius:var(--radius-sm);background:var(--card);cursor:pointer;text-align:center;font-size:13px;color:var(--ink);transition:all .2s}
+.radio-btn:hover{border-color:var(--line-2)}
+.radio-btn.selected{border-color:var(--red);background:#fff5f5;color:var(--red);font-weight:600}
+.checkbox-grid{display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-bottom:10px}
+.checkbox-item{background:var(--card);border:1.5px solid var(--line);border-radius:var(--radius-sm);padding:10px 8px;cursor:pointer;transition:all .2s;font-size:13px;text-align:center;color:var(--ink);display:flex;flex-direction:column;align-items:center;gap:6px}
+.checkbox-item:hover{border-color:var(--line-2)}
+.checkbox-item.selected{border-color:var(--red);background:#fff5f5;color:var(--red);font-weight:500}
+.checkbox-item .check-icon{width:20px;height:20px;border-radius:50%;background:var(--card-2);display:flex;align-items:center;justify-content:center;color:var(--ink-soft);transition:all .2s;border:1px solid var(--line)}
+.checkbox-item .check-icon svg{width:12px;height:12px}
+.checkbox-item.selected .check-icon{background:var(--red);color:#fff;border-color:var(--red)}
+.btn{width:100%;padding:12px;border:none;border-radius:var(--radius-sm);font-size:14px;font-weight:600;letter-spacing:.2px;cursor:pointer;transition:all .2s;margin-bottom:6px;font-family:inherit;display:flex;align-items:center;justify-content:center;gap:6px}
+.btn-primary{background:linear-gradient(135deg,var(--red),var(--red-deep));color:#fff;box-shadow:0 2px 12px rgba(227,6,19,.25)}
+.btn-primary:hover{transform:translateY(-1px);box-shadow:0 4px 16px rgba(227,6,19,.35)}
+.btn-primary:active{transform:translateY(0)}
+.btn-primary:disabled{background:var(--line);color:var(--muted);box-shadow:none;cursor:not-allowed;transform:none}
+.btn-secondary{background:var(--card);color:var(--ink-soft);border:1.5px solid var(--line)}
+.btn-secondary:hover{border-color:var(--line-2);color:var(--ink)}
+.btn-row{display:flex;gap:8px;margin-top:8px}
+.btn-row .btn{flex:1;margin-bottom:0}
+.btn-row .btn-primary{flex:1.3}
+.btn svg{width:14px;height:14px}
+.start-hero{text-align:center;display:flex;flex-direction:column;justify-content:center;padding:12px 4px}
+.start-title{font-size:26px;font-weight:800;line-height:1.15;margin-bottom:10px;color:var(--ink);letter-spacing:-.3px}
+.start-title em{font-style:normal;color:var(--red)}
+.start-subtitle{font-size:14px;color:var(--ink-soft);margin-bottom:16px;line-height:1.45}
+.start-features{display:flex;flex-direction:column;gap:8px;margin-bottom:16px;text-align:left}
+.start-feature{display:flex;align-items:center;gap:10px;padding:10px 12px;background:var(--card);border-radius:var(--radius-sm);border:1px solid var(--line);border-left:2px solid var(--red)}
+.start-feature-icon{width:32px;height:32px;border-radius:50%;background:linear-gradient(135deg,var(--red),var(--red-deep));display:flex;align-items:center;justify-content:center;color:#fff;flex-shrink:0}
+.start-feature-icon svg{width:16px;height:16px}
+.start-feature-text{font-size:13px;color:var(--ink)}
+.start-feature-text b{color:var(--red);font-weight:700}
+.result-card{background:var(--card);border-radius:var(--radius);padding:14px;margin-bottom:10px;border-left:2px solid var(--red);box-shadow:var(--shadow)}
+.result-summary{font-size:17px;line-height:1.25;margin-bottom:10px;color:var(--ink);font-weight:700}
+.result-summary em{color:var(--red);font-style:normal}
+.result-row{display:flex;justify-content:space-between;align-items:baseline;padding:8px 0;border-bottom:1px dashed var(--line)}
+.result-row:last-child{border-bottom:none}
+.result-row .label{color:var(--ink-soft);font-size:13px}
+.result-row .value{font-weight:600;color:var(--ink);font-size:14px}
+.result-total{margin-top:12px;padding-top:12px;border-top:2px solid var(--line)}
+.result-old{font-size:14px;color:var(--muted);text-decoration:line-through;margin-bottom:3px;display:flex;align-items:center;gap:6px;flex-wrap:wrap}
+.result-old-label{font-size:10px;color:var(--muted);text-decoration:none;padding:2px 6px;background:var(--card-2);border-radius:8px;letter-spacing:.2px}
+.result-new{font-size:28px;font-weight:800;color:var(--red);letter-spacing:-.3px;line-height:1.1}
+.result-note{font-size:11px;color:var(--ink-soft);margin-top:8px;line-height:1.4;padding:8px 10px;background:var(--card-2);border-radius:var(--radius-sm);border-left:2px solid var(--line-2)}
+.form-card{background:var(--card);border-radius:var(--radius);padding:16px;margin-bottom:10px;border-left:2px solid var(--red);box-shadow:var(--shadow);position:relative;overflow:hidden}
+.form-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--red),transparent)}
+.form-title{font-size:18px;font-weight:700;margin-bottom:6px;color:var(--ink);line-height:1.2}
+.form-subtitle{font-size:13px;color:var(--ink-soft);margin-bottom:12px;line-height:1.4}
+.file-input{display:block;width:100%;padding:12px;border:1.5px dashed var(--line);border-radius:var(--radius-sm);text-align:center;cursor:pointer;font-size:13px;color:var(--ink-soft);transition:all .2s;background:var(--card-2)}
+.file-input:hover{border-color:var(--red);color:var(--red)}
+.file-input.has-file{border-style:solid;border-color:var(--red);color:var(--red);background:#fff5f5}
+.toast{position:fixed;top:50%;left:50%;transform:translate(-50%,-50%) scale(.85);background:var(--red);color:#fff;padding:14px 22px;border-radius:var(--radius);font-size:17px;font-weight:700;opacity:0;pointer-events:none;transition:all .35s cubic-bezier(.4,0,.2,1);z-index:100;box-shadow:0 12px 40px rgba(227,6,19,.35);letter-spacing:.2px;text-align:center}
+.toast.show{opacity:1;transform:translate(-50%,-50%) scale(1)}
+.toast small{display:block;font-size:11px;color:rgba(255,255,255,.85);margin-top:3px;letter-spacing:.3px;font-weight:500}
+.currency-switch{display:inline-flex;background:var(--card);border:1px solid var(--line);border-radius:24px;padding:3px;margin-bottom:10px;box-shadow:var(--shadow)}
+.currency-btn{padding:6px 14px;border:none;background:transparent;border-radius:21px;cursor:pointer;font-size:13px;font-weight:600;color:var(--ink-soft);transition:all .2s;font-family:inherit}
+.currency-btn.active{background:linear-gradient(135deg,var(--red),var(--red-deep));color:#fff;box-shadow:0 2px 6px rgba(227,6,19,.3)}
+.hint{font-size:12px;color:var(--ink-soft);margin-top:6px;font-style:italic;padding-left:10px;border-left:2px solid var(--red)}
+.level-recommend{background:#fff5f5;border:1.5px solid var(--red);border-radius:var(--radius-sm);padding:10px 12px;margin-bottom:10px;font-size:13px;color:var(--red);display:flex;align-items:flex-start;gap:8px}
+.level-recommend-icon{flex-shrink:0;font-size:16px}
+.level-recommend-icon svg{width:16px;height:16px}
+.level-recommend b{font-weight:700;color:var(--red)}
+.remote-block{background:var(--card);border:1.5px solid var(--red);border-radius:var(--radius);padding:14px;margin-bottom:10px;border-left:2px solid var(--red);box-shadow:var(--shadow)}
+.remote-block .form-title{color:var(--red);font-size:16px}
+@media(min-width:600px){.qwrap{padding:0 20px}.question{font-size:24px}.start-title{font-size:30px}.style-grid{grid-template-columns:1fr 1fr 1fr}.style-photo{height:110px}}
+/* футер */
+.ftr{background:#181818;color:rgba(255,255,255,.75);padding:22px 0}
+.ftr-in{display:flex;flex-wrap:wrap;gap:12px;justify-content:space-between;align-items:center;font-size:13px}
+.ftr-contacts{display:flex;gap:16px}
+.ftr-contacts a{color:rgba(255,255,255,.85);text-decoration:none}
+.ftr-contacts a:hover{color:#fff;text-decoration:underline}
+/* ============ ЭКРАН 1: ЛУЧ-СКАНЕР ДО/ПОСЛЕ ============ */
+.cmp{position:absolute;inset:0;z-index:0;overflow:hidden;cursor:ew-resize;touch-action:pan-y}
+.cmp-img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.cmp-after{position:absolute;inset:0;clip-path:inset(0 0 0 50%);will-change:clip-path}
+.cmp-after.glitch{animation:cmpGlitch .18s steps(2,end)}
+@keyframes cmpGlitch{0%{transform:translateX(0)}35%{transform:translateX(-3px);filter:saturate(1.6) contrast(1.2)}70%{transform:translateX(2px);filter:hue-rotate(8deg)}100%{transform:none;filter:none}}
+.cmp-canvas{position:absolute;inset:0;pointer-events:none;z-index:2}
+.cmp-beam{position:absolute;top:0;bottom:0;left:50%;width:3px;margin-left:-1.5px;z-index:3;pointer-events:none;
+background:linear-gradient(180deg,transparent,rgba(255,255,255,.95) 25%,#fff 50%,rgba(227,6,19,.95) 75%,transparent);
+box-shadow:0 0 18px rgba(227,6,19,.8),0 0 46px rgba(255,255,255,.45)}
+.cmp-beam::after{content:'‹›';position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:30px;height:30px;border-radius:50%;
+background:rgba(20,20,20,.55);border:1.5px solid rgba(255,255,255,.85);backdrop-filter:blur(4px);box-shadow:0 0 12px rgba(227,6,19,.6);
+color:#fff;font-size:13px;font-weight:700;letter-spacing:-2px;display:flex;align-items:center;justify-content:center;padding-left:2px}
+.cmp-tag{position:absolute;top:44px;z-index:4;font-size:9px;font-weight:800;letter-spacing:1.2px;padding:5px 10px;border-radius:999px;
+background:rgba(15,15,15,.5);color:#fff;backdrop-filter:blur(6px);border:1px solid rgba(255,255,255,.25)}
+.cmp-tag-l{left:14px}
+.cmp-tag-r{right:14px;background:rgba(227,6,19,.85);border-color:transparent}
+.cmp-counter{position:absolute;top:44px;left:50%;transform:translateX(-50%);z-index:4;padding:6px 12px;border-radius:999px;
+background:rgba(15,15,15,.55);border:1px solid rgba(255,255,255,.25);backdrop-filter:blur(8px);color:#fff;font-size:11px;font-weight:600;white-space:nowrap}
+.cmp-counter b{color:var(--red-soft);font-weight:800}
+.cmp-hint{position:absolute;left:50%;top:38%;transform:translateX(-50%);z-index:4;display:flex;align-items:center;gap:8px;padding:9px 16px;
+border-radius:999px;background:rgba(15,15,15,.55);border:1px solid rgba(255,255,255,.25);backdrop-filter:blur(8px);color:#fff;
+font-size:12px;font-weight:600;pointer-events:none;transition:opacity .5s,transform .5s;animation:hintPulse 2.2s ease-in-out infinite}
+.cmp-hint svg{width:16px;height:16px;flex-shrink:0}
+.cmp-hint.off{opacity:0;transform:translateX(-50%) translateY(8px)}
+@keyframes hintPulse{0%,100%{box-shadow:0 0 0 0 rgba(227,6,19,0)}50%{box-shadow:0 0 0 10px rgba(227,6,19,.14)}}
+@media(max-width:560px){.cmp-tag,.cmp-counter{top:40px}.cmp-counter{font-size:10px;padding:5px 10px}.cmp-hint{top:34%;font-size:11px}}
+.cmp-tag,.cmp-counter,.cmp-canvas,.cmp-beam{pointer-events:none}
+</style>
+</head>
+<body>
+<header class="hdr">
+  <div class="wrap hdr-in">
+    <a href="#" style="text-decoration:none;display:flex;align-items:center">
+      <svg width="62" height="52" viewBox="0 0 100 84" fill="none">
+        <path d="M8 40 L50 8 L92 40" stroke="#111" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M26 30 L26 18" stroke="#111" stroke-width="6" stroke-linecap="round"/>
+        <text x="50" y="64" font-family="Inter" font-weight="900" font-size="30" fill="#e30613" text-anchor="middle" letter-spacing="-1">BMT</text>
+        <line x1="20" y1="70" x2="80" y2="70" stroke="#fbbf24" stroke-width="3.5"/>
+        <text x="50" y="81" font-family="Inter" font-weight="600" font-size="9" fill="#111" text-anchor="middle" letter-spacing="1.5">REMONTI</text>
+      </svg>
+    </a>
+    <span class="h-right">
+      <span class="h-contact">
+        <a class="tel-row" href="tel:+995591935178"><span class="tel-pre">tel:</span>+995 591 935 178</a>
+        <a class="tg-pill" href="https://t.me/bmtremonti" target="_blank">
+          <i><svg fill="currentColor" viewBox="0 0 24 24"><path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/></svg></i>Telegram
+        </a>
+      </span>
+      <span class="v-div"></span>
+      <button class="burger" onclick="menuT()" aria-label="Меню">
+        <svg width="26" height="26" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" d="M4 6h16M4 12h16M4 18h16"/></svg>
+      </button>
+    </span>
+  </div>
+  <div class="m-menu" id="mMenu">
+    <a href="#quizflow" onclick="menuT()">Калькулятор</a>
+    <a href="#" onclick="menuT()">Этапы</a>
+    <a href="#" onclick="menuT()">Цены</a>
+    <a href="#" onclick="menuT()">Договор</a>
+    <button class="tb-btn" onclick="menuT()">Получить смету</button>
+  </div>
+</header>
+<section class="hero">
+  <div class="cmp" id="cmp">
+    <!-- СЛОЙ «ДО» -->
+    <img class="cmp-img" src="before.jpg" onerror="this.onerror=null;this.src='after.jpg';" alt="Квартира до ремонта: кирпич и бетон, вид на море">
+    <!-- СЛОЙ «ПОСЛЕ» (проявляется лучом) -->
+    <div class="cmp-after" id="cmpAfter">
+      <img class="cmp-img" src="after.jpg" onerror="this.onerror=null;this.src='https://image.qwenlm.ai/public_source/d1845d93-62e6-4962-b9ab-5aadf40f5ba9/189a4bf80-4dd9-4914-8266-2e678b535e689934.png';" alt="Квартира после ремонта: меблированные апартаменты с видом на море">
+    </div>
+    <canvas class="cmp-canvas" id="cmpSpark"></canvas>
+    <div class="cmp-beam" id="cmpBeam"></div>
+    <span class="cmp-tag cmp-tag-l">ДО</span>
+    <span class="cmp-tag cmp-tag-r">ПОСЛЕ</span>
+    <div class="cmp-counter">Вы уже отремонтировали <b id="cmpM2">0 м²</b></div>
+    <div class="cmp-hint" id="cmpHint">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 7l-5 5 5 5M16 7l5 5-5 5M3 12h18"/></svg>
+      Проведите — увидите результат
+    </div>
+    <div class="shade"></div>
+  </div>
+
+  <div class="wrap eyebrow-row">
+    <span class="eyebrow"><i></i>Батуми · Грузия · ремонт квартир</span>
+  </div>
+
+  <div class="hero-in">
+    <h1 class="h1">Ремонт квартир <span class="o block">от идеи до реализации</span></h1>
+    <p class="hero-sub">Под вашим контролем, где бы вы ни были: фотоотчёт каждого этапа до закрытия стен, оплата после приёмки, цена зафиксирована в договоре.</p>
+
+    <a class="quiz-cta" href="#quizflow" id="quizCta">
+      <span class="qc-info">
+        <span class="qc-label"><b>9 шагов</b> · 60 секунд</span>
+        <span class="qc-q" id="qcQ">Площадь квартиры?</span>
+        <span class="qc-dots"><i class="on"></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></span>
+      </span>
+      <span class="qc-btn">Рассчитать стоимость
+        <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M13 5l7 7-7 7M5 12h14"/></svg>
+      </span>
+    </a>
+  </div>
+</section>
+<script>
+/* ============ ЛУЧ-СКАНЕР v3: ДО/ПОСЛЕ ============ */
+(function(){
+var cmp=document.getElementById('cmp');
+if(!cmp)return;
+var after=document.getElementById('cmpAfter');
+var beam=document.getElementById('cmpBeam');
+var hint=document.getElementById('cmpHint');
+var m2=document.getElementById('cmpM2');
+var cv=document.getElementById('cmpSpark');
+if(!after||!beam||!cv)return;
+var ctx=cv.getContext('2d');
+var TOTAL=64;
+var reduced=window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches;
+var x=50,target=50,lastX=50,speed=0,lastInteract=0,started=false,parts=[],glitchT=0;
+function sizeCv(){cv.width=cmp.clientWidth||1;cv.height=cmp.clientHeight||1;}
+sizeCv();addEventListener('resize',sizeCv);
+function fromEvent(e){
+  if(e.target&&e.target.closest&&e.target.closest('.hero-in,.eyebrow-row,.hdr,.m-menu,.quiz-cta'))return;
+  var r=cmp.getBoundingClientRect();
+  if(e.clientY<r.top||e.clientY>r.bottom)return;
+  target=Math.max(4,Math.min(96,(e.clientX-r.left)/r.width*100));
+  lastInteract=(window.performance&&performance.now())||Date.now();
+  if(!started&&hint){started=true;hint.classList.add('off');}
+}
+addEventListener('pointermove',fromEvent,true);
+addEventListener('pointerdown',fromEvent,true);
+addEventListener('mousemove',fromEvent,true);
+function spawn(n,px){
+  for(var i=0;i<n;i++)parts.push({x:px+(Math.random()*8-4),y:Math.random()*cv.height,
+    vx:(Math.random()*2-1)*.7,vy:-Math.random()*.9-.2,life:1,r:Math.random()*1.6+.4});
+}
+function tick(t){
+  if(!reduced&&t-lastInteract>2600)target=50+34*Math.sin(t/3800);
+  x+=(target-x)*.12;
+  speed=Math.abs(x-lastX);lastX=x;
+  after.style.clipPath='inset(0 0 0 '+x+'%)';
+  beam.style.left=x+'%';
+  if(speed>2.2&&t-glitchT>240){glitchT=t;after.classList.add('glitch');setTimeout(function(){after.classList.remove('glitch');},170);}
+  if(m2)m2.textContent=Math.round(TOTAL*(1-x/100))+' м²';
+  if(!reduced){
+    var px=x/100*cv.width;
+    if(speed>.15)spawn(Math.min(4,Math.round(speed)),px);else if(Math.random()<.05)spawn(1,px);
+    ctx.clearRect(0,0,cv.width,cv.height);
+    parts=parts.filter(function(p){return p.life>0;});
+    for(var i=0;i<parts.length;i++){var p=parts[i];p.x+=p.vx;p.y+=p.vy;p.vy+=.012;p.life-=.02;
+      ctx.globalAlpha=Math.max(p.life,0);
+      ctx.fillStyle=p.life>.6?'#ffffff':'#ff5a4e';
+      ctx.beginPath();ctx.arc(p.x,p.y,p.r,0,6.283);ctx.fill();}
+    ctx.globalAlpha=1;
+  }
+  requestAnimationFrame(tick);
+}
+requestAnimationFrame(tick);
+})();
+</script>
+<section class="quiz-band" id="quizflow">
+  <div class="qwrap">
+    <div class="qband-title">Сколько будет стоить <em>ваш ремонт?</em></div>
+    <div class="qband-sub">9 коротких ответов — и предварительная смета у вас в WhatsApp</div>
+
+    <div class="discount-bar">
+      <div class="discount-top">
+        <span class="discount-label">Ваша скидка <b id="discountValue">0%</b></span>
+        <span class="discount-max">10%</span>
+      </div>
+      <div class="discount-track"><div class="discount-fill" id="discountFill" style="width:0%"></div></div>
+      <div class="discount-replica" id="discountReplica"></div>
+    </div>
+
+    <div class="progress" id="progress"></div>
+    <div id="quiz"></div>
+  </div>
+</section>
+<footer class="ftr">
+  <div class="wrap ftr-in">
+    <span>© 2026 BMT Remonti · Батуми, Грузия</span>
+    <span class="ftr-contacts">
+      <a href="tel:+995591935178">+995 591 935 178</a>
+      <a href="https://t.me/bmtremonti" target="_blank">Telegram</a>
+      <a href="https://wa.me/995591935178" target="_blank">WhatsApp</a>
+    </span>
+  </div>
+</footer>
+<div class="toast" id="toast"></div>
+<script>
+function menuT(){document.getElementById('mMenu').classList.toggle('open');}
+
+/* видео первого экрана: если hero.mp4 нет — включаем фототрансформацию */
+(function(){
+  const v=document.getElementById('heroVideo');
+  const scene=document.getElementById('scene');
+  if(!v||!scene)return;
+  let ok=false;
+  const fail=()=>{if(!ok){scene.classList.add('video-off');}};
+  v.addEventListener('loadeddata',()=>{ok=true;scene.classList.remove('video-off');});
+  v.addEventListener('error',fail,true);
+  v.querySelectorAll('source').forEach(s=>s.addEventListener('error',fail));
+  setTimeout(()=>{if(!ok&&v.readyState<2)fail();},2500);
+  const slow=(navigator.connection&&/2g|slow-2g/.test(navigator.connection.effectiveType||''));
+  if(slow){fail();}
+})();
+
+/* тизер вопросов на первом экране */
+(function(){
+  const QS=['Площадь квартиры?','Какой каркас?','Нужна перепланировка?','Какой уровень отделки?','Сколько санузлов?','Добавить тёплый пол?','Нужна фильтрация воды?','Подключить умный дом?','Остеклить балкон?'];
+  let qi=0;
+  const q=document.getElementById('qcQ');
+  if(!q)return;
+  const dots=document.querySelectorAll('.qc-dots i');
+  setInterval(()=>{
+    q.classList.add('swap');
+    setTimeout(()=>{
+      qi=(qi+1)%QS.length;
+      q.textContent=QS[qi];
+      dots.forEach((d,k)=>d.classList.toggle('on',k===qi));
+      q.classList.remove('swap');
+    },300);
+  },2400);
+})();
+
+/* ============ QUIZ ============ */
+const CFG = {
+DISCOUNT_DAYS: 7,
+BATH_EXTRA: 0,
+APPS_SCRIPT_URL: '',
+WHATSAPP: '995591935178',
+CURRENCY_API: 'https://api.exchangerate-api.com/v4/latest/USD',
+FALLBACK_RATE: 2.72,
+OLD_RATES: {
+white: {work: [195, 230, 270], materials: [150, 280, 520]},
+black: {work: [230, 255, 290], materials: [200, 350, 600]}
+},
+get NEW_RATES() {
+const r = {};
+for (const k in this.OLD_RATES) {
+r[k] = {work: this.OLD_RATES[k].work.map(v => v / 0.9), materials: this.OLD_RATES[k].materials.map(v => v / 0.9)};
+}
+return r;
+},
+LEVELS: ['Базовый', 'Стандарт', 'Премиум'],
+QUESTIONS: [
+{id:'state',q:'Расскажите о вашей квартире. <em>Какая она сейчас?</em>',type:'radio',options:[
+{v:'black',t:'Голые стены, только бетон и блоки',s:'чёрный каркас',icon:'walls'},
+{v:'white',t:'Стены оштукатурены, пол залит',s:'белый каркас',icon:'plaster'},
+{v:'secondary',t:'Вторичка, нужно всё обновить',s:'',icon:'old'},
+{v:'villa',t:'Дом или вилла',s:'считаем индивидуально',icon:'villa'}]},
+{id:'area',q:'Какая площадь <em>и сколько ванных комнат?</em>',type:'area'},
+{id:'purpose',q:'Для чего <em>эта квартира?</em>',type:'radio',options:[
+{v:'self',t:'Для себя и семьи',icon:'family'},
+{v:'rent_short',t:'Для гостей, буду сдавать посуточно',icon:'key'},
+{v:'rent_long',t:'Для долгой аренды',icon:'calendar'},
+{v:'sell',t:'Для продажи',icon:'tag'}]},
+{id:'style',q:'Какая атмосфера <em>вам ближе?</em>',type:'style',options:[
+{v:'neoclassic',t:'Неоклассика',d:'Молдинги, симметрия, тёплая элегантность',level:2,art:'neoclassic'},
+{v:'minimal',t:'Минимализм',d:'Чистые формы и воздух, ничего лишнего',level:1,art:'minimal'},
+{v:'scandi',t:'Скандинавский',d:'Светлое дерево, мягкий свет, уют',level:0,art:'scandi'},
+{v:'loft',t:'Лофт',d:'Кирпич, бетон и открытые коммуникации',level:1,art:'loft'},
+{v:'brutalism',t:'Брутализм',d:'Бетон, геометрия, честные фактуры',level:2,art:'brutalism'},
+{v:'advise',t:'Нужен совет',d:'Подберём стиль вместе с дизайнером',level:-1,art:'advise'}]},
+{id:'level',q:'Какой уровень отделки <em>вам подойдёт?</em>',type:'level',options:[
+{v:0,t:'Базовый',d:'Аккуратная чистая отделка: стены, электрика, плитка в санузле, пол'},
+{v:1,t:'Стандарт',d:'Плюс потолки, покраска, двери и сантехника. Можно просто жить'},
+{v:2,t:'Премиум',d:'Двухуровневые потолки, молдинги, плинтусы, плитка в гостиной'}]},
+{id:'extras',q:'Что сделает жизнь <em>комфортнее?</em>',type:'checkbox',options:[
+{v:'warm_floor',t:'Тёплый пол',icon:'warm'},
+{v:'smart_home',t:'Умный дом',icon:'smart'},
+{v:'water_filter',t:'Фильтрация воды',icon:'water'},
+{v:'voltage',t:'Защита от скачков',icon:'bolt'},
+{v:'emergency_light',t:'Аварийное освещение',icon:'lamp'},
+{v:'ac',t:'Кондиционеры',icon:'wind'},
+{v:'none',t:'Ничего лишнего',icon:'none'}]},
+{id:'materials',q:'Как поступим <em>с материалами?</em>',type:'radio',options:[
+{v:'full',t:'Подберите и привезите всё за меня',icon:'truck'},
+{v:'list',t:'Выбор материалов — моя часть, нужен список',icon:'list'},
+{v:'consult',t:'Расскажите, как обычно это делают',icon:'chat'}]},
+{id:'start',q:'Когда мечтаете <em>начать?</em>',type:'radio',options:[
+{v:'month',t:'В ближайший месяц',icon:'soon'},
+{v:'1-3',t:'Через 1–3 месяца',icon:'cal1'},
+{v:'3-6',t:'Через 3–6 месяцев',icon:'cal2'},
+{v:'looking',t:'Пока присматриваюсь',icon:'eye'}]},
+{id:'country',q:'Где вы сейчас <em>живёте?</em>',type:'radio',hint:'Расскажем, как следить за ремонтом, не приезжая.',options:[
+{v:'georgia',t:'В Грузии',icon:'geo'},
+{v:'cis',t:'Россия, СНГ',icon:'cis'},
+{v:'israel',t:'Израиль',icon:'isr'},
+{v:'other',t:'Другая страна',icon:'globe'}]}
+]
+};
+
+/* Фото стилей: прямые ссылки ibb */
+const STYLE_PHOTOS = {
+neoclassic:'https://i.ibb.co/nqCX67QP/2.png',
+minimal:'https://i.ibb.co/Hf71yxTz/3.jpg',
+scandi:'https://i.ibb.co/RGDLycxm/3.png',
+loft:'https://i.ibb.co/Ys0NQ6S/1.jpg',
+brutalism:'https://i.ibb.co/RGCQqzm5/2.jpg',
+advise:'style-advise.jpg'
+};
+
+const ICONS = {
+walls:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="4" width="18" height="16" rx="1"/><path d="M3 10h18M3 16h18M9 4v16M15 4v16"/></svg>',
+plaster:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="4" width="18" height="16" rx="1"/><path d="M7 8v8M12 8v8M17 8v8"/></svg>',
+old:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 20h18M5 20V8l7-4 7 4v12M9 20v-6h6v6"/></svg>',
+villa:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 20h18M4 20V10l8-6 8 6v10M10 20v-6h4v6M7 13h2M15 13h2"/></svg>',
+family:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="9" cy="8" r="2.5"/><circle cx="17" cy="9" r="2"/><path d="M4 20c0-3 2-5 5-5s5 2 5 5M14 20c0-2.5 1.5-4 3-4s3 1.5 3 4"/></svg>',
+key:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="8" cy="10" r="4"/><path d="M11 12l9 0M17 12v3M20 12v2"/></svg>',
+calendar:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/></svg>',
+tag:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 12l9-9 9 0 0 9-9 9zM8 8h.01"/></svg>',
+warm:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M8 3c0 4-4 5-4 9a4 4 0 0 0 8 0c0-4-4-5-4-9z"/></svg>',
+smart:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="6" y="3" width="12" height="18" rx="2"/><path d="M11 18h2"/></svg>',
+water:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 3c-4 5-7 8-7 12a7 7 0 0 0 14 0c0-4-3-7-7-12z"/></svg>',
+bolt:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M13 2L4 14h7l-1 8 9-12h-7z"/></svg>',
+lamp:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M9 18h6M10 22h4M12 2v2M5 9H3M21 9h-2M6 16a6 6 0 0 1-1-10 6 6 0 0 1 10 0 6 6 0 0 1-1 10"/></svg>',
+wind:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 8h13a3 3 0 1 0-3-3M3 14h17a3 3 0 1 1-3 3M3 18h9"/></svg>',
+none:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="9"/><path d="M6 6l12 12"/></svg>',
+truck:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 7h11v10H3zM14 10h4l3 3v4h-7M7 20a2 2 0 1 0 0-4 2 2 0 0 0 0 4zM17 20a2 2 0 1 0 0-4 2 2 0 0 0 0 4z"/></svg>',
+list:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M8 6h13M8 12h13M8 18h13M3 6h.01M3 12h.01M3 18h.01"/></svg>',
+chat:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M21 12a8 8 0 0 1-12 7l-6 2 2-6a8 8 0 1 1 16-3z"/></svg>',
+soon:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>',
+cal1:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4M8 14h.01M12 14h.01M16 14h.01"/></svg>',
+cal2:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/></svg>',
+eye:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 12s4-7 10-7 10 7 10 7-4 7-10 7-10-7-10-7z"/><circle cx="12" cy="12" r="3"/></svg>',
+geo:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a14 14 0 0 1 0 18M12 3a14 14 0 0 0 0 18"/></svg>',
+cis:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c3 3 3 15 0 18M12 3c-3 3-3 15 0 18"/></svg>',
+isr:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 3l8 14H4zM12 21l-8-14h16"/></svg>',
+globe:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a14 14 0 0 1 0 18M12 3a14 14 0 0 0 0 18"/></svg>',
+arrow:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M13 6l6 6-6 6"/></svg>',
+check:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12l5 5L20 7"/></svg>',
+spark:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 2v4M12 18v4M4.9 4.9l2.8 2.8M16.3 16.3l2.8 2.8M2 12h4M18 12h4M4.9 19.1l2.8-2.8M16.3 7.7l2.8-2.8"/></svg>',
+heart:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 21s-8-5-8-11a5 5 0 0 1 9-3 5 5 0 0 1 9 3c0 6-8 11-8 11z"/></svg>',
+shield:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 2l8 4v6c0 5-4 9-8 10-4-1-8-5-8-10V6z"/><path d="M9 12l2 2 4-4"/></svg>'
+};
+
+/* Вектор-фолбэк, если фото недоступно */
+const STYLE_ART = {
+neoclassic:`<svg viewBox="0 0 200 140" xmlns="http://www.w3.org/2000/svg">
+<defs><linearGradient id="ncw" x1="0" x2="0" y1="0" y2="1"><stop offset="0" stop-color="#f0eae1"/><stop offset="1" stop-color="#ddd5c8"/></linearGradient></defs>
+<rect width="200" height="140" fill="url(#ncw)"/>
+<rect x="18" y="16" width="72" height="58" fill="none" stroke="#c4b8a4" stroke-width="2"/>
+<rect x="26" y="24" width="56" height="42" fill="none" stroke="#c4b8a4" stroke-width="1"/>
+<rect x="110" y="16" width="72" height="58" fill="none" stroke="#c4b8a4" stroke-width="2"/>
+<rect x="118" y="24" width="56" height="42" fill="none" stroke="#c4b8a4" stroke-width="1"/>
+<line x1="100" y1="0" x2="100" y2="26" stroke="#b3a68f" stroke-width="1.5"/>
+<circle cx="100" cy="32" r="7" fill="none" stroke="#b3a68f" stroke-width="1.5"/>
+<path d="M93 32h14M100 25v14" stroke="#b3a68f" stroke-width="1"/>
+<rect x="0" y="104" width="200" height="36" fill="#cbb99b"/>
+<path d="M0 104l20 12 20-12 20 12 20-12 20 12 20-12 20 12 20-12 20 12" fill="none" stroke="#b3a184" stroke-width="1"/>
+<rect x="52" y="78" width="96" height="26" rx="6" fill="#e6ddcd" stroke="#c4b8a4"/>
+<rect x="58" y="70" width="84" height="12" rx="5" fill="#efe7d9" stroke="#c4b8a4"/>
+<rect x="60" y="84" width="24" height="12" rx="4" fill="#d9cbb4"/>
+<rect x="116" y="84" width="24" height="12" rx="4" fill="#d9cbb4"/>
+</svg>`,
+minimal:`<svg viewBox="0 0 200 140" xmlns="http://www.w3.org/2000/svg">
+<defs><linearGradient id="mnw" x1="0" x2="1" y1="0" y2="1"><stop offset="0" stop-color="#efedea"/><stop offset="1" stop-color="#dedcd7"/></linearGradient></defs>
+<rect width="200" height="140" fill="url(#mnw)"/>
+<rect x="140" y="22" width="34" height="46" fill="none" stroke="#c8c5bf" stroke-width="2"/>
+<line x1="0" y1="102" x2="200" y2="102" stroke="#c8c5bf" stroke-width="1.5"/>
+<rect x="0" y="102" width="200" height="38" fill="#d6d3cd"/>
+<rect x="34" y="76" width="86" height="22" rx="3" fill="#e8e6e1" stroke="#c8c5bf"/>
+<rect x="30" y="66" width="10" height="32" rx="3" fill="#dfdcd6" stroke="#c8c5bf"/>
+<circle cx="150" cy="88" r="10" fill="#e30613" opacity=".14"/>
+<line x1="150" y1="98" x2="150" y2="102" stroke="#c8c5bf" stroke-width="1.5"/>
+<rect x="52" y="30" width="40" height="26" fill="#e8e6e1" stroke="#c8c5bf"/>
+</svg>`,
+scandi:`<svg viewBox="0 0 200 140" xmlns="http://www.w3.org/2000/svg">
+<defs><linearGradient id="scw" x1="0" x2="0" y1="0" y2="1"><stop offset="0" stop-color="#f4f0e8"/><stop offset="1" stop-color="#e2dccf"/></linearGradient></defs>
+<rect width="200" height="140" fill="url(#scw)"/>
+<rect x="0" y="98" width="200" height="42" fill="#d9c9ae"/>
+<path d="M0 108h200M0 118h200M0 128h200" stroke="#c6b495" stroke-width="1"/>
+<path d="M40 108v10M90 118v10M140 108v10M170 128v10" stroke="#c6b495" stroke-width="1"/>
+<rect x="36" y="62" width="64" height="30" rx="8" fill="#efe9dd" stroke="#d3c8b4"/>
+<rect x="42" y="54" width="52" height="12" rx="6" fill="#f6f1e6" stroke="#d3c8b4"/>
+<path d="M44 92l-4 8M92 92l4 8" stroke="#b9a888" stroke-width="2"/>
+<circle cx="140" cy="52" r="14" fill="#9aa88b" opacity=".8"/>
+<circle cx="152" cy="62" r="10" fill="#8a987b" opacity=".8"/>
+<path d="M146 76v22" stroke="#8a987b" stroke-width="2"/>
+<rect x="138" y="96" width="18" height="10" rx="2" fill="#cbb391"/>
+<line x1="70" y1="0" x2="70" y2="30" stroke="#d3c8b4" stroke-width="1.5"/>
+<path d="M58 30h24l-4 10h-16z" fill="#f2ead9" stroke="#d3c8b4"/>
+</svg>`,
+loft:`<svg viewBox="0 0 200 140" xmlns="http://www.w3.org/2000/svg">
+<defs>
+<pattern id="brk" width="24" height="12" patternUnits="userSpaceOnUse">
+<rect width="24" height="12" fill="#9c4f42"/>
+<rect x="0" y="0" width="11" height="5" fill="#a4544a"/><rect x="12" y="0" width="11" height="5" fill="#a4544a"/>
+<rect x="6" y="6" width="11" height="5" fill="#a4544a"/><rect x="18" y="6" width="6" height="5" fill="#a4544a"/><rect x="0" y="6" width="4" height="5" fill="#a4544a"/>
+</pattern>
+<linearGradient id="lfc" x1="0" x2="0" y1="0" y2="1"><stop offset="0" stop-color="#b9b6b0"/><stop offset="1" stop-color="#a5a29c"/></linearGradient>
+</defs>
+<rect width="200" height="140" fill="url(#brk)"/>
+<rect width="200" height="20" fill="url(#lfc)"/>
+<rect x="118" y="26" width="66" height="76" fill="#cfe3ea" stroke="#1c1c1c" stroke-width="3"/>
+<path d="M151 26v76M118 64h66" stroke="#1c1c1c" stroke-width="2"/>
+<rect x="0" y="102" width="200" height="38" fill="#8f8b84"/>
+<rect x="24" y="72" width="76" height="26" rx="4" fill="#8a5a3b"/>
+<rect x="28" y="64" width="68" height="12" rx="4" fill="#96684a"/>
+<rect x="30" y="78" width="20" height="10" rx="3" fill="#7a4c30"/>
+<rect x="74" y="78" width="20" height="10" rx="3" fill="#7a4c30"/>
+<line x1="52" y1="20" x2="52" y2="44" stroke="#1c1c1c" stroke-width="1.5"/>
+<circle cx="52" cy="50" r="6" fill="#ffd9a0" stroke="#1c1c1c"/>
+<line x1="76" y1="20" x2="76" y2="36" stroke="#1c1c1c" stroke-width="1.5"/>
+<circle cx="76" cy="42" r="6" fill="#ffd9a0" stroke="#1c1c1c"/>
+<path d="M8 30h20M8 40h14" stroke="#1c1c1c" stroke-width="2"/>
+</svg>`,
+brutalism:`<svg viewBox="0 0 200 140" xmlns="http://www.w3.org/2000/svg">
+<defs><linearGradient id="brc" x1="0" x2="1" y1="0" y2="1"><stop offset="0" stop-color="#cfcdc9"/><stop offset="1" stop-color="#aeaca8"/></linearGradient></defs>
+<rect width="200" height="140" fill="url(#brc)"/>
+<g fill="#989692"><circle cx="30" cy="30" r="2.5"/><circle cx="80" cy="30" r="2.5"/><circle cx="130" cy="30" r="2.5"/><circle cx="30" cy="70" r="2.5"/><circle cx="80" cy="70" r="2.5"/><circle cx="130" cy="70" r="2.5"/></g>
+<rect x="150" y="18" width="14" height="86" fill="#e8f2f7"/>
+<polygon points="150,18 164,18 196,140 128,140" fill="#ffffff" opacity=".35"/>
+<rect x="24" y="84" width="96" height="14" fill="#8f8d89"/>
+<rect x="30" y="98" width="12" height="20" fill="#8f8d89"/>
+<rect x="102" y="98" width="12" height="20" fill="#8f8d89"/>
+<rect x="40" y="58" width="52" height="26" fill="#b98d5f"/>
+<rect x="0" y="118" width="200" height="22" fill="#9c9a96"/>
+<rect x="128" y="64" width="34" height="54" fill="#7e7c78"/>
+</svg>`,
+advise:`<svg viewBox="0 0 200 140" xmlns="http://www.w3.org/2000/svg">
+<defs><linearGradient id="adw" x1="0" x2="1" y1="0" y2="1"><stop offset="0" stop-color="#e5e2dd"/><stop offset="1" stop-color="#d8d4cc"/></linearGradient></defs>
+<rect width="200" height="140" fill="url(#adw)"/>
+<circle cx="100" cy="70" r="35" fill="none" stroke="#e30613" stroke-width="1.5" stroke-dasharray="3 3" opacity=".4"/>
+<text x="100" y="80" text-anchor="middle" font-family="Georgia" font-size="28" fill="#e30613" opacity=".6">?</text>
+</svg>`
+};
+
+const state = {
+screen: 0, answers: {}, discount: 0, maxDiscount: 0,
+currency: 'USD', rate: CFG.FALLBACK_RATE, startTime: Date.now(),
+source: getSource(),
+device: /Mobi|Android/i.test(navigator.userAgent) ? 'mobile' : 'desktop',
+fileAttached: false
+};
+
+function loadState(){try{const s=localStorage.getItem('bmt_quiz_v3');if(s){const p=JSON.parse(s);Object.assign(state,p);state.startTime=Date.now()-(p.elapsed||0);}}catch(e){}}
+function saveState(){try{state.elapsed=Date.now()-state.startTime;localStorage.setItem('bmt_quiz_v3',JSON.stringify(state));}catch(e){}}
+function getSource(){const params=new URLSearchParams(location.search);const utm={};['utm_source','utm_medium','utm_campaign','utm_content','utm_term'].forEach(k=>{if(params.get(k))utm[k]=params.get(k)});if(Object.keys(utm).length)return JSON.stringify(utm);if(document.referrer&&!document.referrer.includes(location.host))return document.referrer;return location.pathname;}
+async function loadRate(){try{const res=await fetch(CFG.CURRENCY_API);const data=await res.json();if(data.rates&&data.rates.GEL)state.rate=data.rates.GEL;}catch(e){state.rate=CFG.FALLBACK_RATE;}}
+
+function render(){
+renderProgress();renderDiscount();
+const quiz=document.getElementById('quiz');quiz.innerHTML='';
+if(state.screen===0)renderStart(quiz);
+else if(state.screen<=9)renderQuestion(quiz,state.screen-1);
+else renderResult(quiz);
+saveState();
+}
+function renderProgress(){const prog=document.getElementById('progress');prog.innerHTML='';for(let i=1;i<=9;i++){const d=document.createElement('div');d.className='progress-dot';if(i<state.screen)d.classList.add('done');else if(i===state.screen)d.classList.add('active');prog.appendChild(d);}}
+function renderDiscount(){document.getElementById('discountValue').textContent=state.discount+'%';document.getElementById('discountFill').style.width=(state.discount*10)+'%';const r=document.getElementById('discountReplica');let t='';if(state.discount===3)t='Отлично, уже 3%';else if(state.discount===5)t='Половина пути пройдена';else if(state.discount===9)t='Один шаг до максимальной скидки';else if(state.discount===10)t='Максимальная скидка ваша';r.textContent=t;if(t)r.classList.add('show');else r.classList.remove('show');}
+
+function renderStart(quiz){
+quiz.innerHTML=`
+<div class="screen active"><div class="start-hero">
+<div class="start-title">Рассчитаем ваш ремонт<br>и подарим скидку <em>до 10%</em></div>
+<div class="start-subtitle">С каждым ответом скидка растёт. Это займёт около минуты.</div>
+<div class="start-features">
+<div class="start-feature"><div class="start-feature-icon">${ICONS.spark}</div><div class="start-feature-text">9 коротких вопросов — <b>+9% к скидке</b></div></div>
+<div class="start-feature"><div class="start-feature-icon">${ICONS.heart}</div><div class="start-feature-text">WhatsApp — <b>ещё +1%</b> и смета на почту</div></div>
+<div class="start-feature"><div class="start-feature-icon">${ICONS.shield}</div><div class="start-feature-text">Скидка закреплена за вами на <b>${CFG.DISCOUNT_DAYS} дней</b></div></div>
+</div>
+<button class="btn btn-primary" onclick="nextScreen()">Рассчитать стоимость ${ICONS.arrow}</button>
+</div></div>`;
+}
+
+function renderQuestion(quiz,idx){
+const q=CFG.QUESTIONS[idx];
+let html=`<div class="screen active"><div class="quiz-card">
+<div class="quiz-card-label">Квиз · шаг ${idx+1} из 9</div>
+<div class="question">${q.q}</div>`;
+if(q.hint)html+=`<div class="subtitle">${q.hint}</div>`;
+if(q.type==='radio'){
+html+='<div class="options">';
+q.options.forEach(opt=>{const sel=state.answers[q.id]===opt.v?'selected':'';const icon=ICONS[opt.icon]||ICONS.arrow;
+html+=`<div class="option ${sel}" onclick="selectRadio('${q.id}','${opt.v}')"><div class="option-icon">${icon}</div><div class="option-text">${opt.t}${opt.s?`<small>${opt.s}</small>`:''}</div></div>`;});
+html+='</div>';
+if(q.id==='state'&&state.answers[q.id]==='villa'){html+='<div class="hint">Виллы считаем индивидуально. Оставьте контакт — обсудим детали.</div>';}
+}
+else if(q.type==='area'){
+const area=state.answers[q.id+'_area']||'';const baths=state.answers[q.id+'_baths']||'1';
+html+=`<div class="input-group"><label class="input-label">Площадь, м²</label>
+<input type="number" class="input-field" value="${area}" oninput="updateArea(this.value)" placeholder="Например, 65"></div>
+<div class="input-group"><label class="input-label">Санузлы</label><div class="radio-group">
+<div class="radio-btn ${baths==='1'?'selected':''}" onclick="updateBaths('1')">Один</div>
+<div class="radio-btn ${baths==='2'?'selected':''}" onclick="updateBaths('2')">Два</div>
+<div class="radio-btn ${baths==='3+'?'selected':''}" onclick="updateBaths('3+')">Три и больше</div></div></div>
+<div class="hint">Примерно подойдёт, уточним на замере.</div>`;
+}
+else if(q.type==='style'){
+html+='<div class="style-grid">';
+q.options.forEach(opt=>{const sel=state.answers[q.id]===opt.v?'selected':'';
+html+=`<div class="style-card ${sel}" onclick="selectStyle('${opt.v}',${opt.level})">
+<div class="style-photo">${STYLE_ART[opt.art]}<img src="${STYLE_PHOTOS[opt.art]}" alt="${opt.t}" loading="lazy" onerror="this.style.display='none'"></div>
+<div class="style-info"><div class="style-name">${opt.t}</div>${opt.d?`<div class="style-desc">${opt.d}</div>`:''}</div></div>`;});
+html+='</div>';
+}
+else if(q.type==='level'){
+const rec=getLevelRecommendation();
+if(rec>=0){html+=`<div class="level-recommend"><div class="level-recommend-icon">${ICONS.spark}</div><div>Вам может подойти <b>${CFG.LEVELS[rec]}</b>. Но выбор за вами — меняйте на любой.</div></div>`;}
+html+='<div class="options">';
+q.options.forEach(opt=>{const sel=state.answers[q.id]===opt.v?'selected':'';
+html+=`<div class="option ${sel}" onclick="selectRadio('${q.id}',${opt.v})"><div class="option-icon">${ICONS.arrow}</div><div class="option-text">${opt.t}<small>${opt.d}</small></div></div>`;});
+html+='</div>';
+}
+else if(q.type==='checkbox'){
+html+='<div class="checkbox-grid">';
+const selected=state.answers[q.id]||[];
+q.options.forEach(opt=>{const sel=selected.includes(opt.v)?'selected':'';const icon=ICONS[opt.icon]||ICONS.check;
+html+=`<div class="checkbox-item ${sel}" onclick="toggleCheckbox('${q.id}','${opt.v}')"><div class="check-icon">${selected.includes(opt.v)?ICONS.check:icon}</div><div>${opt.t}</div></div>`;});
+html+='</div><div class="hint">Цену назовём после замера.</div>';
+}
+html+=`</div><div class="btn-row">
+${state.screen>1?'<button class="btn btn-secondary" onclick="prevScreen()">Назад</button>':''}
+<button class="btn btn-primary" onclick="nextScreen()" ${canProceed()?'':'disabled'}>Далее ${ICONS.arrow}</button></div></div>`;
+quiz.innerHTML=html;
+}
+
+function renderResult(quiz){
+if(state.answers.state==='villa'){renderVilla(quiz);return;}
+const calc=calculate();
+const oldTotal=calc.total;
+const newTotal=calc.total*(1-state.discount/100);
+const curr=state.currency==='USD'?'$':'₾';
+const rate=state.currency==='USD'?1:state.rate;
+const stateLabel=(state.answers.state==='secondary'||state.answers.state==='black')?'чёрный каркас':'белый каркас';
+const levelLabel=CFG.LEVELS[state.answers.level];
+const styleLabel=CFG.QUESTIONS[3].options.find(o=>o.v===state.answers.style)?.t||'';
+let html=`<div class="screen active">
+<div class="result-card">
+<div class="result-summary">Ваш ремонт: <em>${state.answers.area_area||'?'} м²</em>, ${stateLabel}, ${levelLabel}${styleLabel?', '+styleLabel:''}</div>
+<div class="result-row"><span class="label">Работы</span><span class="value">${formatPrice(calc.work*rate,curr)}</span></div>
+<div class="result-row"><span class="label">Материалы (ориентир)</span><span class="value">${formatPrice(calc.materials*rate,curr)}</span></div>
+<div class="result-row"><span class="label">Срок</span><span class="value">${calc.duration} мес</span></div>
+<div class="result-total">
+${state.discount>0?`<div class="result-old">${formatPrice(oldTotal*rate,curr)} <span class="result-old-label">Цена без скидки</span></div>`:''}
+<div class="result-new">${formatPrice(newTotal*rate,curr)}</div>
+${state.answers.state==='secondary'?'<div class="result-note">Демонтаж на вторичке: по факту после осмотра.</div>':''}
+<div class="result-note">Предварительный расчёт. Точная смета — после замера. Допы считаются отдельно.</div>
+</div></div>
+<div class="currency-switch">
+<button class="currency-btn ${state.currency==='USD'?'active':''}" onclick="setCurrency('USD')">$ USD</button>
+<button class="currency-btn ${state.currency==='GEL'?'active':''}" onclick="setCurrency('GEL')">₾ GEL</button>
+</div>
+<div class="form-card">
+<div class="form-title">${state.discount<10?'Осталась последняя ступень':'Максимальная скидка ваша'}</div>
+<div class="form-subtitle">${state.discount<10?`Оставьте WhatsApp — и скидка станет 10%. Закрепим её за вами на ${CFG.DISCOUNT_DAYS} дней и пришлём смету по этапам с примерами работ в вашем стиле.`:`Скидка закреплена за вами на ${CFG.DISCOUNT_DAYS} дней. Оставьте контакт — пришлём смету по этапам с примерами работ в вашем стиле.`}</div>
+<div class="input-group"><input type="text" class="input-field" id="userName" placeholder="Ваше имя"></div>
+<div class="input-group"><input type="tel" class="input-field" id="userPhone" placeholder="WhatsApp, например +995..."></div>
+<div class="input-group"><label class="file-input" id="fileLabel"><input type="file" id="fileInput" style="display:none" accept="image/*,.pdf" onchange="handleFile(this)">Прикрепить планировку (необязательно)</label></div>
+<button class="btn btn-primary" onclick="submitLead()">${state.discount<10?'Получить скидку 10%':'Получить смету'} ${ICONS.arrow}</button>
+</div>
+${state.answers.country&&state.answers.country!=='georgia'?`
+<div class="remote-block">
+<div class="form-title">Вы будете видеть ход ремонта и принимать этапы ремонта в личном приложении</div>
+<div class="form-subtitle">Фото и статусы — без поездок.</div>
+</div>`:''}
+<div class="btn-row"><button class="btn btn-secondary" onclick="prevScreen()">Назад</button></div>
+</div>`;
+quiz.innerHTML=html;
+}
+
+function renderVilla(quiz){
+quiz.innerHTML=`<div class="screen active"><div class="form-card">
+<div class="form-title">Дом или вилла — считаем индивидуально</div>
+<div class="form-subtitle">Оставьте WhatsApp: обсудим объём, приедем на объект или созвонимся и подготовим смету под ваш проект. Скидка 10% действует и на виллы.</div>
+<div class="input-group"><input type="text" class="input-field" id="userName" placeholder="Ваше имя"></div>
+<div class="input-group"><input type="tel" class="input-field" id="userPhone" placeholder="WhatsApp, например +995..."></div>
+<button class="btn btn-primary" onclick="submitLead()">Получить индивидуальный расчёт ${ICONS.arrow}</button>
+</div></div>`;
+}
+
+function getLevelRecommendation(){const s=state.answers.style;if(s==='neoclassic')return 2;if(s==='minimal')return 1;if(s==='scandi')return 1;if(s==='loft')return 1;if(s==='brutalism')return 2;return -1;}
+function canProceed(){const idx=state.screen-1;if(idx<0)return true;const q=CFG.QUESTIONS[idx];if(q.id==='area')return state.answers[q.id+'_area']>0;return !!state.answers[q.id];}
+function selectRadio(id,val){state.answers[id]=val;if(id==='state'&&val==='villa'){setTimeout(()=>{state.screen=10;render();},400);return;}render();}
+function selectStyle(val,level){state.answers.style=val;if(level>=0&&state.answers.level===undefined){state.answers.level=level;}render();}
+function toggleCheckbox(id,val){if(!state.answers[id])state.answers[id]=[];const arr=state.answers[id];const idx=arr.indexOf(val);if(val==='none'){state.answers[id]=['none'];}else{if(idx>=0)arr.splice(idx,1);else{arr.push(val);const n=arr.indexOf('none');if(n>=0)arr.splice(n,1);}}render();}
+function updateArea(val){state.answers.area_area=parseFloat(val)||0;saveState();const btn=document.querySelector('#quiz .btn-primary');if(btn)btn.disabled=!(state.answers.area_area>0);}
+function updateBaths(val){const q=CFG.QUESTIONS[state.screen-1];state.answers[q.id+'_baths']=val;render();}
+function setCurrency(c){state.currency=c;render();}
+function handleFile(input){if(input.files.length){state.fileAttached=true;const l=document.getElementById('fileLabel');l.classList.add('has-file');l.innerHTML=`<input type="file" id="fileInput" style="display:none" accept="image/*,.pdf" onchange="handleFile(this)">✓ ${input.files[0].name}`;}}
+function nextScreen(){if(!canProceed())return;if(state.screen<10){const prev=state.screen;state.screen++;if(prev>=1&&prev<=9&&state.discount<10){state.discount=Math.min(10,state.discount+1);state.maxDiscount=Math.max(state.maxDiscount,state.discount);showToast('+1% к скидке',`Ваша скидка теперь ${state.discount}%`);}render();}}
+function prevScreen(){if(state.screen>0){state.screen--;render();}}
+function showToast(text,sub){const t=document.getElementById('toast');t.innerHTML=text+(sub?`<small>${sub}</small>`:'');t.classList.add('show');setTimeout(()=>t.classList.remove('show'),1800);}
+function calculate(){const area=state.answers.area_area||0;const sv=state.answers.state;const level=state.answers.level||0;const baths=parseInt(state.answers.area_baths)||1;let ft='white';if(sv==='black'||sv==='secondary')ft='black';const r=CFG.NEW_RATES[ft];const work=r.work[level]*area;const materials=r.materials[level]*area;const total=work+materials+(baths>1?(baths-1)*CFG.BATH_EXTRA:0);const duration=ft==='white'?1.8:2.7;return{work,materials,total,duration};}
+function formatPrice(val,curr){const n=Math.round(val).toLocaleString('ru-RU');return curr==='$'?'$'+n:n+' '+curr;}
+function getScore(){let s=0;const st=state.answers.start;if(st==='month')s+=3;else if(st==='1-3')s+=2;else if(st==='3-6')s+=1;if(state.answers.state)s+=1;if(state.fileAttached)s+=2;if(state.answers.materials==='full')s+=1;return s;}
+function getScoreLabel(s){if(s>=6)return '🔥 Горячий';if(s>=3)return '🌡 Тёплый';return '❄️ Холодный';}
+
+function submitLead(){
+const name=document.getElementById('userName').value.trim();
+const phone=document.getElementById('userPhone').value.trim();
+if(!name||!phone){showToast('Заполните имя и WhatsApp');return;}
+if(state.discount<10){state.discount=10;state.maxDiscount=10;}
+const calc=calculate();const score=getScore();const elapsed=Math.round((Date.now()-state.startTime)/1000);
+const data={name,phone,frame:state.answers.state,area:state.answers.area_area,baths:state.answers.area_baths,purpose:state.answers.purpose,style:state.answers.style,level:CFG.LEVELS[state.answers.level],extras:(state.answers.extras||[]).join(', '),materials:state.answers.materials,start:state.answers.start,country:state.answers.country,work:Math.round(calc.work),materials_cost:Math.round(calc.materials),total_before:Math.round(calc.total),discount:state.discount,total_after:Math.round(calc.total*(1-state.discount/100)),duration:calc.duration,source:state.source,elapsed,last_screen:state.screen,device:state.device,score,score_label:getScoreLabel(score)};
+const msg=buildWhatsAppMessage(data);
+window.open(`https://wa.me/${CFG.WHATSAPP}?text=${encodeURIComponent(msg)}`,'_blank');
+if(CFG.APPS_SCRIPT_URL){fetch(CFG.APPS_SCRIPT_URL,{method:'POST',mode:'no-cors',headers:{'Content-Type':'application/json'},body:JSON.stringify(data)}).catch(e=>console.log('Apps Script error:',e));}
+localStorage.removeItem('bmt_quiz_v3');
+showToast('Спасибо, '+name,'Открываем WhatsApp…');
+}
+
+function buildWhatsAppMessage(d){
+return `Новая заявка с квиза\n\nИсточник: ${d.source}\nВремя: ${new Date().toLocaleString('ru-RU')}\nПрохождение: ${d.elapsed} сек\nУстройство: ${d.device}\nПоследний экран: ${d.last_screen}\n\nКлиент: ${d.name}\nWhatsApp: ${d.phone}\n\nКвартира:\n• Каркас: ${d.frame}\n• Площадь: ${d.area} м²\n• Санузлы: ${d.baths}\n• Цель: ${d.purpose}\n• Стиль: ${d.style}\n• Уровень: ${d.level}\n• Допы: ${d.extras||'нет'}\n• Материалы: ${d.materials}\n• Старт: ${d.start}\n• Страна: ${d.country}\n\nРасчёт:\n• Работы: $${d.work}\n• Материалы: $${d.materials_cost}\n• Итого до скидки: $${d.total_before}\n• Скидка: ${d.discount}%\n• Итого со скидкой: $${d.total_after}\n• Срок: ${d.duration} мес\n\nСкоринг: ${d.score} — ${d.score_label}`;
+}
+
+window.addEventListener('beforeunload',()=>{if(state.screen>1&&state.screen<10&&CFG.APPS_SCRIPT_URL){navigator.sendBeacon(CFG.APPS_SCRIPT_URL,JSON.stringify({partial:true,screen:state.screen,answers:state.answers,discount:state.discount,source:state.source,elapsed:Math.round((Date.now()-state.startTime)/1000),device:state.device,timestamp:new Date().toISOString()}));}});
+
+if(document.getElementById('quiz')){loadState();loadRate();render();}
+</script>
+</body>
+</html>

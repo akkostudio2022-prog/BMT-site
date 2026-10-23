@@ -1,0 +1,96 @@
+<section class="hero">
+  <div class="cmp" id="cmp">
+    <!-- СЛОЙ «ДО» -->
+    <img class="cmp-img" src="before.jpg" onerror="this.onerror=null;this.src='after.jpg';" alt="Квартира до ремонта: кирпич и бетон, вид на море">
+    <!-- СЛОЙ «ПОСЛЕ» (проявляется лучом) -->
+    <div class="cmp-after" id="cmpAfter">
+      <img class="cmp-img" src="after.jpg" onerror="this.onerror=null;this.src='https://image.qwenlm.ai/public_source/d1845d93-62e6-4962-b9ab-5aadf40f5ba9/189a4bf80-4dd9-4914-8266-2e678b535e689934.png';" alt="Квартира после ремонта: меблированные апартаменты с видом на море">
+    </div>
+    <canvas class="cmp-canvas" id="cmpSpark"></canvas>
+    <div class="cmp-beam" id="cmpBeam"></div>
+    <span class="cmp-tag cmp-tag-l">ДО</span>
+    <span class="cmp-tag cmp-tag-r">ПОСЛЕ</span>
+    <div class="cmp-counter">Вы уже отремонтировали <b id="cmpM2">0 м²</b></div>
+    <div class="cmp-hint" id="cmpHint">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 7l-5 5 5 5M16 7l5 5-5 5M3 12h18"/></svg>
+      Проведите — увидите результат
+    </div>
+    <div class="shade"></div>
+  </div>
+
+  <div class="wrap eyebrow-row">
+    <span class="eyebrow"><i></i>Батуми · Грузия · ремонт квартир</span>
+  </div>
+
+  <div class="hero-in">
+    <h1 class="h1">Ремонт квартир <span class="o block">от идеи до реализации</span></h1>
+    <p class="hero-sub">Под вашим контролем, где бы вы ни были: фотоотчёт каждого этапа до закрытия стен, оплата после приёмки, цена зафиксирована в договоре.</p>
+
+    <a class="quiz-cta" href="#quizflow" id="quizCta">
+      <span class="qc-info">
+        <span class="qc-label"><b>9 шагов</b> · 60 секунд</span>
+        <span class="qc-q" id="qcQ">Площадь квартиры?</span>
+        <span class="qc-dots"><i class="on"></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></span>
+      </span>
+      <span class="qc-btn">Рассчитать стоимость
+        <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M13 5l7 7-7 7M5 12h14"/></svg>
+      </span>
+    </a>
+  </div>
+</section>
+<script>
+/* ============ ЛУЧ-СКАНЕР v3: ДО/ПОСЛЕ ============ */
+(function(){
+var cmp=document.getElementById('cmp');
+if(!cmp)return;
+var after=document.getElementById('cmpAfter');
+var beam=document.getElementById('cmpBeam');
+var hint=document.getElementById('cmpHint');
+var m2=document.getElementById('cmpM2');
+var cv=document.getElementById('cmpSpark');
+if(!after||!beam||!cv)return;
+var ctx=cv.getContext('2d');
+var TOTAL=64;
+var reduced=window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches;
+var x=50,target=50,lastX=50,speed=0,lastInteract=0,started=false,parts=[],glitchT=0;
+function sizeCv(){cv.width=cmp.clientWidth||1;cv.height=cmp.clientHeight||1;}
+sizeCv();addEventListener('resize',sizeCv);
+function fromEvent(e){
+  if(e.target&&e.target.closest&&e.target.closest('.hero-in,.eyebrow-row,.hdr,.m-menu,.quiz-cta'))return;
+  var r=cmp.getBoundingClientRect();
+  if(e.clientY<r.top||e.clientY>r.bottom)return;
+  target=Math.max(4,Math.min(96,(e.clientX-r.left)/r.width*100));
+  lastInteract=(window.performance&&performance.now())||Date.now();
+  if(!started&&hint){started=true;hint.classList.add('off');}
+}
+addEventListener('pointermove',fromEvent,true);
+addEventListener('pointerdown',fromEvent,true);
+addEventListener('mousemove',fromEvent,true);
+function spawn(n,px){
+  for(var i=0;i<n;i++)parts.push({x:px+(Math.random()*8-4),y:Math.random()*cv.height,
+    vx:(Math.random()*2-1)*.7,vy:-Math.random()*.9-.2,life:1,r:Math.random()*1.6+.4});
+}
+function tick(t){
+  if(!reduced&&t-lastInteract>2600)target=50+34*Math.sin(t/3800);
+  x+=(target-x)*.12;
+  speed=Math.abs(x-lastX);lastX=x;
+  after.style.clipPath='inset(0 0 0 '+x+'%)';
+  beam.style.left=x+'%';
+  if(speed>2.2&&t-glitchT>240){glitchT=t;after.classList.add('glitch');setTimeout(function(){after.classList.remove('glitch');},170);}
+  if(m2)m2.textContent=Math.round(TOTAL*(1-x/100))+' м²';
+  if(!reduced){
+    var px=x/100*cv.width;
+    if(speed>.15)spawn(Math.min(4,Math.round(speed)),px);else if(Math.random()<.05)spawn(1,px);
+    ctx.clearRect(0,0,cv.width,cv.height);
+    parts=parts.filter(function(p){return p.life>0;});
+    for(var i=0;i<parts.length;i++){var p=parts[i];p.x+=p.vx;p.y+=p.vy;p.vy+=.012;p.life-=.02;
+      ctx.globalAlpha=Math.max(p.life,0);
+      ctx.fillStyle=p.life>.6?'#ffffff':'#ff5a4e';
+      ctx.beginPath();ctx.arc(p.x,p.y,p.r,0,6.283);ctx.fill();}
+    ctx.globalAlpha=1;
+  }
+  requestAnimationFrame(tick);
+}
+requestAnimationFrame(tick);
+})();
+</script>
